@@ -1,12 +1,12 @@
 "use client";
 import styles from "../../styles/idle.module.css"
 import CodeMirrorEditor from "@/components/idle/CodeMirrorEditor";
-import React, {useEffect, useState} from "react";
+import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
+import {ViewUpdate} from "@uiw/react-codemirror";
 
 
 
-// @ts-ignore
-export default  function Editor({setError, setOutput}){
+export default  function Editor({setError, setOutput}: {setError: Dispatch<SetStateAction<string>>, setOutput: Dispatch<SetStateAction<string>>}) {
 
     const [pyodide, setPyodide] = useState(null);
     const [code, setCode] = useState('# write your python code here');
@@ -34,7 +34,7 @@ export default  function Editor({setError, setOutput}){
 
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const onCodeChange = React.useCallback( async (newCode: string, viewUpdate: never) => {
+        const onCodeChange = React.useCallback( async (newCode: string, viewUpdate: ViewUpdate) => {
             setCode(newCode);
         if(pyodide){
             try{
@@ -64,8 +64,9 @@ captured_output
                 console.log("output", result);
                 setError("No Errors");
             }
-            catch (error) {
-                // @ts-ignore
+            catch (error: unknown) {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-expect-error
                 setError(error.message);
             }
         }

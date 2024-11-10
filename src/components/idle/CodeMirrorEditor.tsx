@@ -1,12 +1,12 @@
 "use client";
-import CodeMirror from '@uiw/react-codemirror'
+import CodeMirror, {ViewUpdate} from '@uiw/react-codemirror'
 import { python } from '@codemirror/lang-python';
 import { oneDark } from '@codemirror/theme-one-dark';
+import React from "react";
 
 
 
-// @ts-ignore
-export default function CodeMirrorEditor({code, onCodeChange}){
+export default function CodeMirrorEditor({code, onCodeChange}: {code: string, onCodeChange: (code: string, viewUpdate: ViewUpdate) => Promise<void>}) {
 
 
     return (

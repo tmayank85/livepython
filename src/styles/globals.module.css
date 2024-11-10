@@ -1,0 +1,20 @@
+
+.body{
+    /* Color schemes */
+    --body-background: #434C5E;
+    --gun-metal: #282c34;
+    --charcoal: #4F5B66;
+    --dark-slate-blue: #2E3440;
+    --jet-black: #23272E;
+    --slate-grey: #2c313c;
+    --soft-light-grey: #D1D8E0;
+    --dark-slate-grey: #2C3E50;
+    --off-white: #ECEFF4;
+    background-color: var(--body-background);
+    margin: 0;
+}
+
+.appBody{
+    display: flex;
+}
+

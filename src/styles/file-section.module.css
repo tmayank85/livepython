@@ -1,0 +1,19 @@
+.fileSection{
+    width: 10vw;
+    height: calc(100vh - 25px);
+    background-color: var(--charcoal);
+}
+
+.fileSectionHeader{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding-left: 5px;
+    height: 15px;
+    color: var(--off-white);
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    background-color: var(--body-background);
+}

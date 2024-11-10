@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap');
+
+
+.idle{
+    width: calc(90vw - 2px);
+    height: calc(100vh - 25px);
+    margin-left: 2px;
+
+    /*child sections props*/
+    --editor-height: 70%;
+    --editor-width: 85%;
+    --output-width: 60%;
+    --header-height: 15px;
+}
+
+
+.editorAndInputParent{
+    width: 100%;
+    height: calc(var(--editor-height) - 1px);
+    display: flex;
+}
+
+.editorAndInputHeader{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding-left: 5px;
+    height: var(--header-height);
+    background-color: var(--slate-grey);
+    color: var(--off-white);
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+}
+
+.editor{
+    width: calc(var(--editor-width) - 1px);
+    height: 100%;
+    background-color: var(--gun-metal);
+}
+
+.editorInnerBox{
+    width: 100%;
+    height: calc(100% - var(--header-height));;
+    overflow: auto;
+    font-size: 18px;
+}
+
+
+.input{
+    width: calc((100% - var(--editor-width)) - 1px);
+    height: 100%;
+    background-color: var(--gun-metal);
+    margin-left: 2px;
+}
+
+
+
+.outputAndErrorParent{
+    width: 100%;
+    height: calc((100% - var(--editor-height)) - 1px);
+    display: flex;
+    margin-top: 2px;
+}
+
+.outputAndErrorHeader{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding-left: 5px;
+    height: var(--header-height);
+    background-color: var(--jet-black);
+    color: var(--off-white);
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+}
+
+
+.output{
+    width: calc(var(--output-width) - 1px);
+    height: 100%;
+    background-color: var(--dark-slate-blue);
+
+}
+
+.outputInnerBox{
+    color: var(--soft-light-grey);
+    padding: 10px;
+    font-size: 18px;
+    overflow: auto;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+    height: calc(100% - var(--header-height));
+}
+
+.outputInnerBox::-webkit-scrollbar {
+    width: 5px; /* Width of the scrollbar */
+    height: 7px;
+}
+
+/* Scrollbar track */
+.outputInnerBox::-webkit-scrollbar-track {
+    background: var(--gun-metal); /* Track background */
+    border-radius: 10px;
+}
+
+/* Scrollbar thumb */
+.outputInnerBox::-webkit-scrollbar-thumb {
+    background: var(--body-background); /* Thumb color */
+    border-radius: 10px;
+}
+
+/* Scrollbar thumb hover */
+.outputInnerBox::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Thumb color on hover */
+}
+
+.error{
+    width: calc((100% - var(--output-width)) - 1px);
+    height: 100%;
+    background-color: var(--dark-slate-blue);
+    margin-left: 2px;
+}
+.errorInnerBox{
+    color: var(--soft-light-grey);
+    padding: 10px;
+    overflow: auto;
+    height: calc(100% - var(--header-height));
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.errorInnerBox::-webkit-scrollbar {
+    width: 5px; /* Width of the scrollbar */
+    height: 7px;
+}
+
+/* Scrollbar track */
+.errorInnerBox::-webkit-scrollbar-track {
+    background: var(--gun-metal); /* Track background */
+    border-radius: 10px;
+}
+
+/* Scrollbar thumb */
+.errorInnerBox::-webkit-scrollbar-thumb {
+    background: var(--body-background); /* Thumb color */
+    border-radius: 10px;
+}
+
+/* Scrollbar thumb hover */
+.errorInnerBox::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Thumb color on hover */
+}

@@ -32,11 +32,13 @@ export default  function Editor({setError, setOutput}){
     }, []);
 
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const onCodeChange = React.useCallback( async (newCode, viewUpdate) => {
         setCode(newCode);
         if(pyodide){
             try{
                 //pyodide.runPython(newCode);
+
                 await pyodide.runPython(`
 import sys
 from io import StringIO
@@ -67,7 +69,7 @@ captured_output
             }
         }
 
-    }, [pyodide]);
+    }, [pyodide, setError, setOutput]);
 
 
     return (<div className={styles.editor}>

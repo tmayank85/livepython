@@ -5,6 +5,7 @@ import { oneDark } from '@codemirror/theme-one-dark';
 
 
 
+// @ts-ignore
 export default function CodeMirrorEditor({code, onCodeChange}){
 
 

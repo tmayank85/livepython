@@ -5,6 +5,7 @@ import React, {useEffect, useState} from "react";
 
 
 
+// @ts-ignore
 export default  function Editor({setError, setOutput}){
 
     const [pyodide, setPyodide] = useState(null);
@@ -33,11 +34,10 @@ export default  function Editor({setError, setOutput}){
 
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const onCodeChange = React.useCallback( async (newCode, viewUpdate) => {
-        setCode(newCode);
+        const onCodeChange = React.useCallback( async (newCode: string, viewUpdate: never) => {
+            setCode(newCode);
         if(pyodide){
             try{
-                //pyodide.runPython(newCode);
 
                 await pyodide.runPython(`
 import sys
@@ -65,6 +65,7 @@ captured_output
                 setError("No Errors");
             }
             catch (error) {
+                // @ts-ignore
                 setError(error.message);
             }
         }

@@ -1,5 +1,6 @@
 import styles from "../../styles/idle.module.css"
 
+// @ts-ignore
 export default function Output({output}){
     return (
         <div className={styles.output}>

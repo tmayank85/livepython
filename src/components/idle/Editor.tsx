@@ -19,6 +19,8 @@ export default  function Editor({setError, setOutput}: {setError: Dispatch<SetSt
             script.onload = async () => {
                 // After the script is loaded, load Pyodide
                 try {
+                    // eslint-disable-next-line
+                    // @ts-ignore
                     const pyodideInstance = await window.loadPyodide(); // Initialize Pyodide
                     setPyodide(pyodideInstance);
                     console.log('Pyodide initialized');
@@ -38,7 +40,8 @@ export default  function Editor({setError, setOutput}: {setError: Dispatch<SetSt
             setCode(newCode);
         if(pyodide){
             try{
-
+                // eslint-disable-next-line
+                // @ts-ignore
                 await pyodide.runPython(`
 import sys
 from io import StringIO
@@ -58,15 +61,17 @@ sys.stdout = old_stdout
 
 captured_output
 `);
-
+                // eslint-disable-next-line
+                // @ts-ignore
                 const result = pyodide.globals.get('captured_output');
                 setOutput(result);
                 console.log("output", result);
                 setError("No Errors");
             }
             catch (error: unknown) {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-expect-error
+
+                // eslint-disable-next-line
+                // @ts-ignore
                 setError(error.message);
             }
         }

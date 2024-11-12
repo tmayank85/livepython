@@ -6,14 +6,17 @@ import {ViewUpdate} from "@uiw/react-codemirror";
 
 
 
-export default  function Editor({setError, setOutput, setEditorRef}:
+export default  function Editor({setError, setOutput, setEditorRef, code, setCode, selectedFile}:
 {setError: Dispatch<SetStateAction<string>>,
 setOutput: Dispatch<SetStateAction<string>>,
-setEditorRef: Dispatch<SetStateAction<MutableRefObject<any>>>
+setEditorRef: Dispatch<SetStateAction<MutableRefObject<any>>>,
+code: string,
+setCode: Dispatch<SetStateAction<string>>,
+selectedFile: number,
 }) {
 
     const [pyodide, setPyodide] = useState(null);
-    const [code, setCode] = useState('# write your python code here');
+
     const editorRef = useRef(null)
 
     useEffect(() => {
@@ -28,7 +31,7 @@ setEditorRef: Dispatch<SetStateAction<MutableRefObject<any>>>
                     // @ts-ignore
                     const pyodideInstance = await window.loadPyodide(); // Initialize Pyodide
                     setPyodide(pyodideInstance);
-                    console.log('Pyodide initialized');
+                    console.log('Pyodide initializeded');
                 } catch (error) {
                     console.error('Error loading Pyodide:', error);
                 }
@@ -36,13 +39,12 @@ setEditorRef: Dispatch<SetStateAction<MutableRefObject<any>>>
             document.body.appendChild(script); // Append script to body
         };
 
-        initializePyodide();
+        initializePyodide()
     }, []);
 
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const onCodeChange = React.useCallback( async (newCode: string, viewUpdate: ViewUpdate) => {
-            setCode(newCode);
+        const executeCode = React.useCallback( async (newCode: string) => {
         if(pyodide){
             try{
                 // eslint-disable-next-line
@@ -70,7 +72,6 @@ captured_output
                 // @ts-ignore
                 const result = pyodide.globals.get('captured_output');
                 setOutput(result);
-                console.log("output", result);
                 setError("No Errors");
             }
             catch (error: unknown) {
@@ -83,16 +84,28 @@ captured_output
 
     }, [pyodide, setError, setOutput]);
 
+    useEffect(() => {
+
+        if(code !== null && code !== undefined) {
+            executeCode(code);
+            }
+
+    }, [code, selectedFile, pyodide]);
 
     useEffect(() => {
         if(editorRef.current)
             setEditorRef(editorRef);
     }, [setEditorRef, editorRef]);
 
-    return (<div ref={editorRef} className={styles.editor}>
+    const saveCode = React.useCallback( async (newCode: string, viewUpdate: ViewUpdate) => {
+        setCode(newCode);
+    }, [setCode]);
+
+
+        return (<div ref={editorRef} className={styles.editor}>
         <div className={styles.editorAndInputHeader}>Python Code</div>
         <div className={styles.editorInnerBox}>
-            <CodeMirrorEditor code={code} onCodeChange={onCodeChange}/>
+            <CodeMirrorEditor code={code} onCodeChange={saveCode}/>
         </div>
 
     </div>);

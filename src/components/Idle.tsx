@@ -6,11 +6,11 @@ import Output from "@/components/idle/Output";
 import Error from "@/components/idle/Error";
 import {useEffect, useRef, useState} from "react";
 
-export default function Idle(){
+export default function Idle({code, setCode, selectedFile, setIdleRef}){
 
     const [error,setError] = useState("No Errors");
     const [output,setOutput] = useState("");
-
+    const idleRef = useRef(null);
 
     const [editorRef, setEditorRef] = useState(useRef(null));
     const [inputRef, setInputRef] = useState(useRef(null));
@@ -168,13 +168,19 @@ export default function Idle(){
 
     }, [editorAndInputParentRef, outputAndErrorParentRef, editorInputAndOutputErrorSeparatorRef]);
 
+    useEffect(() => {
+        if(idleRef.current)
+            setIdleRef(idleRef)
+    }, [idleRef]);
 
 
     return (
-        <div className={styles.idle}>
+        <div ref={idleRef} className={styles.idle}>
 
             <div ref={editorAndInputParentRef} className={styles.editorAndInputParent}>
-                <Editor setError={setError} setOutput={setOutput} setEditorRef={setEditorRef}/>
+                <Editor setError={setError} setOutput={setOutput} setEditorRef={setEditorRef} code={code} setCode={setCode}
+                selectedFile={selectedFile}
+                />
                 <div ref={editorAndInputSeparatorRef} className={styles.editorAndInputSeparator}></div>
                 <Input setInputRef={setInputRef}/>
             </div>

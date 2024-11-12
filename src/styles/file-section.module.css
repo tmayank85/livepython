@@ -2,6 +2,33 @@
     width: calc(10vw - 5px);
     height: calc(100vh - 25px);
     background-color: var(--charcoal);
+    overflow: auto;
+}
+
+.fileSectionInnerBox{
+    min-width: 120px;
+}
+
+.fileSection::-webkit-scrollbar {
+    width: 5px; /* Width of the scrollbar */
+    height: 7px;
+}
+
+/* Scrollbar track */
+.fileSection::-webkit-scrollbar-track {
+    background: var(--body-background); /* Track background */
+    border-radius: 10px;
+}
+
+/* Scrollbar thumb */
+.fileSection::-webkit-scrollbar-thumb {
+    background: var(--gun-metal); /* Thumb color */
+    border-radius: 10px;
+}
+
+/* Scrollbar thumb hover */
+.fileSection::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Thumb color on hover */
 }
 
 .fileSectionHeader{
@@ -15,8 +42,41 @@
     font-family: 'Open Sans', sans-serif;
     font-weight: 700;
     font-size: 11px;
-    background-color: var(--body-background);
+    background-color: var(--jet-black);
 }
+
+.fileContainer{
+    margin-top: 20px;
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+.fileContainer::-webkit-scrollbar {
+    width: 5px; /* Width of the scrollbar */
+    height: 7px;
+}
+
+/* Scrollbar track */
+.fileContainer::-webkit-scrollbar-track {
+    background: var(--body-background); /* Track background */
+    border-radius: 10px;
+}
+
+/* Scrollbar thumb */
+.fileContainer::-webkit-scrollbar-thumb {
+    background: var(--gun-metal); /* Thumb color */
+    border-radius: 10px;
+}
+
+/* Scrollbar thumb hover */
+.fileContainer::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Thumb color on hover */
+}
+
 
 .fileList{
     width: 100%;
@@ -41,17 +101,37 @@
 }
 
 .file:hover{
-    background-color: var(--body-background);
+    background-color: var(--charcoal-ultra);
 }
 
 .selectedFile{
     background-color: var(--slate-grey);
     padding-bottom: 3px;
-    width: 90%;
+    width: 100%;
     height: 20px;
     padding-left: 10px;
     padding-right: 5px;
     display: flex;
     align-items: center;
     cursor: text;
+}
+
+
+.createNewFile{
+    width: 100%;
+    margin-top: 10px;
+
+}
+
+.createNewFileButton{
+    width: 100%;
+    color: var(--soft-dark-grey);
+    background-color: var(--slate-grey);
+    border: 1px solid var(--body-background);
+    cursor: pointer;
+}
+
+.createNewFileButton:active{
+    border: 1px solid var(--charcoal);
+
 }

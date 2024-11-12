@@ -1,5 +1,5 @@
-import File from "@/components/idle/fileSection/File";
-import styles from "../../../styles/file-section.module.css"
+import File from "@/components/fileSection/File";
+import styles from "../../styles/file-section.module.css"
 
 export default function FileList({fileList, selectedFile, onFileClick}: {
     fileList: Array<string>,

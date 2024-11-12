@@ -1,15 +1,20 @@
 "use client";
 import styles from "../../styles/idle.module.css"
 import CodeMirrorEditor from "@/components/idle/CodeMirrorEditor";
-import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
+import React, {Dispatch, MutableRefObject, SetStateAction, useEffect, useRef, useState} from "react";
 import {ViewUpdate} from "@uiw/react-codemirror";
 
 
 
-export default  function Editor({setError, setOutput}: {setError: Dispatch<SetStateAction<string>>, setOutput: Dispatch<SetStateAction<string>>}) {
+export default  function Editor({setError, setOutput, setEditorRef}:
+{setError: Dispatch<SetStateAction<string>>,
+setOutput: Dispatch<SetStateAction<string>>,
+setEditorRef: Dispatch<SetStateAction<MutableRefObject<any>>>
+}) {
 
     const [pyodide, setPyodide] = useState(null);
     const [code, setCode] = useState('# write your python code here');
+    const editorRef = useRef(null)
 
     useEffect(() => {
         const initializePyodide = async () => {
@@ -79,7 +84,12 @@ captured_output
     }, [pyodide, setError, setOutput]);
 
 
-    return (<div className={styles.editor}>
+    useEffect(() => {
+        if(editorRef.current)
+            setEditorRef(editorRef);
+    }, [setEditorRef, editorRef]);
+
+    return (<div ref={editorRef} className={styles.editor}>
         <div className={styles.editorAndInputHeader}>Python Code</div>
         <div className={styles.editorInnerBox}>
             <CodeMirrorEditor code={code} onCodeChange={onCodeChange}/>

@@ -8,6 +8,7 @@
     --jet-black: #23272E;
     --slate-grey: #2c313c;
     --soft-light-grey: #D1D8E0;
+    --soft-dark-grey: #b4bbc1;
     --dark-slate-grey: #2C3E50;
     --off-white: #ECEFF4;
     background-color: var(--body-background);
@@ -18,3 +19,9 @@
     display: flex;
 }
 
+.fileAndIdleSeparator{
+    height: calc(100vh - 25px);;
+    width: 4px;
+    background-color: var(--body-background);
+    cursor: ew-resize;
+}

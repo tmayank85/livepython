@@ -13,7 +13,6 @@ export default function CodeMirrorEditor({code, onCodeChange}: {code: string, on
         <>
             <CodeMirror
                 value={code}
-                height="463px"
                 extensions = {[python()]}
                 theme = {oneDark}
                 onChange={onCodeChange}

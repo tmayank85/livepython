@@ -8,6 +8,7 @@ export default function pythonCompiler(){
     return (
         <div className={styles.appBody}>
             <FileSection/>
+            <div className={styles.fileAndIdleSeparator}></div>
             <Idle/>
         </div>
     )

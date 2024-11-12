@@ -1,5 +1,5 @@
 .fileSection{
-    width: 10vw;
+    width: calc(10vw - 5px);
     height: calc(100vh - 25px);
     background-color: var(--charcoal);
 }
@@ -16,4 +16,42 @@
     font-weight: 700;
     font-size: 11px;
     background-color: var(--body-background);
+}
+
+.fileList{
+    width: 100%;
+    margin-top: 10px;
+    box-sizing: border-box;
+    font-family: 'Roboto Mono', sans-serif;
+    font-size: 14px;
+    color: var(--soft-dark-grey);
+    font-weight: 400;
+}
+
+.file{
+    padding-bottom: 3px;
+    width: 100%;
+    height: 20px;
+    padding-left: 10px;
+    padding-right: 5px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+}
+
+.file:hover{
+    background-color: var(--body-background);
+}
+
+.selectedFile{
+    background-color: var(--slate-grey);
+    padding-bottom: 3px;
+    width: 90%;
+    height: 20px;
+    padding-left: 10px;
+    padding-right: 5px;
+    display: flex;
+    align-items: center;
+    cursor: text;
 }

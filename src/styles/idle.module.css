@@ -3,7 +3,7 @@
 
 .idle{
     width: calc(90vw);
-    height: calc(100vh - 25px);
+    height: calc(100vh - var(--site-header-height));
 
     /*child sections props*/
     --editor-height: 80%;
@@ -72,8 +72,46 @@
 
 .input{
     width: 100%;
-    height: calc(100% - var(--editor-height) - 3px);
+    height: calc(100% - var(--editor-height) - 6px);
     background-color: var(--gun-metal);
+}
+
+.inputInnerBox{
+    margin: 0;
+    width: calc(100% - 2px);
+    height: calc(100% - var(--header-height) - 2px);
+    background-color: var(--gun-metal);
+    outline: none;
+    border: none;
+    color: var(--soft-dark-grey);
+    font-family: monospace;
+    font-size: 16px;
+    resize: none;
+    overflow: auto;
+
+}
+
+
+.inputInnerBox::-webkit-scrollbar {
+    width: 5px; /* Width of the scrollbar */
+    height: 7px;
+}
+
+/* Scrollbar track */
+.inputInnerBox::-webkit-scrollbar-track {
+    background: var(--gun-metal); /* Track background */
+    border-radius: 10px;
+}
+
+/* Scrollbar thumb */
+.inputInnerBox::-webkit-scrollbar-thumb {
+    background: var(--body-background); /* Thumb color */
+    border-radius: 10px;
+}
+
+/* Scrollbar thumb hover */
+.inputInnerBox::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Thumb color on hover */
 }
 
 .editorAndInputSeparator{

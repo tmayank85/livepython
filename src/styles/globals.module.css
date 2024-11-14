@@ -7,13 +7,17 @@
     --charcoal-ultra: #33373a;
     --dark-slate-blue: #2E3440;
     --jet-black: #23272E;
+    --jet-brown-ultra: #3e4249;
     --slate-grey: #2c313c;
     --soft-light-grey: #D1D8E0;
     --soft-dark-grey: #b4bbc1;
     --dark-slate-grey: #2C3E50;
+    --neon-green: #39FF14;
     --off-white: #ECEFF4;
     background-color: var(--body-background);
     margin: 0;
+
+    --site-header-height: 27px;
 }
 
 .appBody{
@@ -26,3 +30,4 @@
     background-color: var(--body-background);
     cursor: ew-resize;
 }
+

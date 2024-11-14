@@ -6,13 +6,14 @@ import {ViewUpdate} from "@uiw/react-codemirror";
 
 
 
-export default  function Editor({setError, setOutput, setEditorRef, code, setCode, selectedFile}:
+export default  function Editor({setError, setOutput, setEditorRef, code, setCode, selectedFile, input}:
 {setError: Dispatch<SetStateAction<string>>,
 setOutput: Dispatch<SetStateAction<string>>,
 setEditorRef: Dispatch<SetStateAction<MutableRefObject<any>>>,
 code: string,
 setCode: Dispatch<SetStateAction<string>>,
 selectedFile: number,
+input: string
 }) {
 
     const [pyodide, setPyodide] = useState(null);
@@ -44,21 +45,31 @@ selectedFile: number,
 
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const executeCode = React.useCallback( async (newCode: string) => {
+    const executeCode = React.useCallback( async (newCode: string, inputGiven) => {
+
         if(pyodide){
             try{
+                const timeout = 100;
                 // eslint-disable-next-line
                 // @ts-ignore
-                await pyodide.runPython(`
+                await pyodide.runPythonAsync(`
 import sys
+import asyncio
+import time
+
 from io import StringIO
 
 # Redirect stdout to capture print
+sys.stdin = StringIO('''${inputGiven}'''.replace('''\n''', '''\\n'''));
+
 old_stdout = sys.stdout
 sys.stdout = StringIO()
+code = """${newCode}"""
 
-# Python code that prints something
-${newCode}
+
+def run():
+    exec(code)
+run()
 
 # Get the printed output
 captured_output = sys.stdout.getvalue()
@@ -67,7 +78,7 @@ captured_output = sys.stdout.getvalue()
 sys.stdout = old_stdout
 
 captured_output
-`);
+`)
                 // eslint-disable-next-line
                 // @ts-ignore
                 const result = pyodide.globals.get('captured_output');
@@ -87,10 +98,12 @@ captured_output
     useEffect(() => {
 
         if(code !== null && code !== undefined) {
-            executeCode(code);
+            executeCode(code, input);
+
+
             }
 
-    }, [code, selectedFile, pyodide]);
+    }, [code, selectedFile, pyodide, input]);
 
     useEffect(() => {
         if(editorRef.current)

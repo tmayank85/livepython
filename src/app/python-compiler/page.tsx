@@ -9,6 +9,7 @@ import {useEffect, useRef, useState} from "react";
 export default function PythonCompiler(){
 
     const [code, setCode] = useState("");
+    const [input, setInput] = useState("");
     const [selectedFile, setSelectedFile] = useState(0);
 
     const [fileSectionRef, setFileSectionRef] = useState(useRef(null));
@@ -18,30 +19,36 @@ export default function PythonCompiler(){
     useEffect(() => {
 
         let initialFileSectionAndIdleSepXPos = 0;
-        const minFileSectionWidth = "30px";
-        const minIdleWidth = "800px";
+        const minFileSectionWidth = 30;
+        const minIdleWidth = 600;
 
         const FileSectionAndIdleOnMouseMove = (event)=>{
             const dx = event.clientX - initialFileSectionAndIdleSepXPos;
             initialFileSectionAndIdleSepXPos = event.clientX
-            let dyEditorInput = parseInt(fileSectionRef.current.offsetWidth) + dx;
-            let dyOutputError = parseInt(idleRef.current.offsetWidth) - dx;
-            if(dyEditorInput >= parseInt(minFileSectionWidth)){
-                if(dyOutputError >= parseInt(minIdleWidth)) {
-                    fileSectionRef.current.style.width = `${dyEditorInput}px`;
-                    idleRef.current.style.width = `${dyOutputError}px`;
+            let finalFileSectionWidth = 0;
+            let finalIdleWidth = 0;
+            let dxFileSection = parseInt(fileSectionRef.current.offsetWidth) + dx;
+            let dxidle = parseInt(idleRef.current.offsetWidth) - dx;
+            if(dxFileSection >= minFileSectionWidth){
+                if(dxidle >= minIdleWidth) {
+                    finalFileSectionWidth = dxFileSection;
+                    finalIdleWidth = dxidle;
                 }
                 else{
-                    dyEditorInput -= parseInt(minIdleWidth) - dyOutputError;
-                    fileSectionRef.current.style.width = `${dyEditorInput}px`;
-                    idleRef.current.style.width = minIdleWidth;
+                    dxFileSection -= minIdleWidth - dxidle;
+                    finalFileSectionWidth = dxFileSection;
+                    finalIdleWidth = minIdleWidth;
                 }
             }
             else{
-                fileSectionRef.current.style.width = minFileSectionWidth;
-                dyOutputError -= parseInt(minFileSectionWidth) - dyEditorInput;
-                idleRef.current.style.width = `${dyOutputError}px`;
+                finalFileSectionWidth = minFileSectionWidth;
+                dxidle -= minFileSectionWidth - dxFileSection;
+                finalIdleWidth = dxidle;
             }
+            const finalFileSectionWidthPercent = (finalFileSectionWidth/(finalFileSectionWidth+finalIdleWidth))*100;
+            const finalIdleWidthPercent = (finalIdleWidth/(finalFileSectionWidth+finalIdleWidth))*100;
+            fileSectionRef.current.style.width = `${finalFileSectionWidthPercent}%`;
+            idleRef.current.style.width = `${finalIdleWidthPercent}%`;
 
 
         }
@@ -51,7 +58,6 @@ export default function PythonCompiler(){
 
         const FileSectionAndIdleOnMouseDown = (event) => {
             initialFileSectionAndIdleSepXPos = event.clientX;
-            console.log("Mouse down")
             document.addEventListener("mousemove", FileSectionAndIdleOnMouseMove);
             document.addEventListener("mouseup", FileSectionAndIdleOnMouseUp)
         }
@@ -65,9 +71,24 @@ export default function PythonCompiler(){
 
     return (
         <div className={styles.appBody}>
-            <FileSection setFileSectionRef={setFileSectionRef} selectedFile={selectedFile} setSelectedFile={setSelectedFile} code={code} setCode={setCode}/>
+            <FileSection
+                setFileSectionRef={setFileSectionRef}
+                selectedFile={selectedFile}
+                setSelectedFile={setSelectedFile}
+                code={code}
+                setCode={setCode}
+                input={input}
+                setInput={setInput}
+            />
             <div ref={fileSectionIdleSeparatorRef} className={styles.fileAndIdleSeparator} ></div>
-            <Idle setIdleRef={setIdleRef} selectedFile={selectedFile}  code={code} setCode={setCode} />
+            <Idle
+                setIdleRef={setIdleRef}
+                selectedFile={selectedFile}
+                code={code}
+                setCode={setCode}
+                input={input}
+                setInput={setInput}
+            />
         </div>
     )
 

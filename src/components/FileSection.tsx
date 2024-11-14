@@ -6,7 +6,7 @@ import {useEffect, useRef, useState} from "react";
 import CreateNewFileButton from "@/components/fileSection/CreateNewFileButton";
 import {createNewFile, getFile, getFileNameList, saveFile} from "@/app/utils/fileUtils";
 
-export default function FileSection({code, setCode, selectedFile, setSelectedFile, setFileSectionRef}) {
+export default function FileSection({code, setCode, selectedFile, setSelectedFile, setFileSectionRef, input, setInput}) {
 
     const [fileNameList, setFileNameList] = useState([]);
     const fileSectionRef = useRef(null);
@@ -31,14 +31,15 @@ export default function FileSection({code, setCode, selectedFile, setSelectedFil
     useEffect(() => {
         const file = getFile(fileNameList[selectedFile]);
         setCode(file.fileContent)
+        setInput(file.input)
     }, [selectedFile, fileNameList]);
 
     useEffect(() => {
         const fileName = fileNameList[selectedFile];
         if(fileName!==null && fileName !== undefined && code!==undefined && code!==null) {
-            saveFile(fileName, code)
+            saveFile(fileName, code, input)
         }
-    }, [code]);
+    }, [code, input]);
 
     useEffect(() => {
         if(fileSectionRef.current)
@@ -51,7 +52,7 @@ export default function FileSection({code, setCode, selectedFile, setSelectedFil
             <div className={styles.fileSectionInnerBox}>
                 <CreateNewFileButton onButtonClick={onCreateNewFileClick}/>
                 <div className={styles.fileContainer}>
-                <FileList fileList={fileNameList} selectedFile={selectedFile} onFileClick={onFileClick}/>
+                <FileList setFileNameList={setFileNameList} fileList={fileNameList} selectedFile={selectedFile} onFileClick={onFileClick}/>
                 </div>
             </div>
 

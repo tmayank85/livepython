@@ -6,10 +6,11 @@ import Output from "@/components/idle/Output";
 import Error from "@/components/idle/Error";
 import {useEffect, useRef, useState} from "react";
 
-export default function Idle({code, setCode, selectedFile, setIdleRef}){
+export default function Idle({code, setCode, selectedFile, setIdleRef, input, setInput}){
 
     const [error,setError] = useState("No Errors");
     const [output,setOutput] = useState("");
+
     const idleRef = useRef(null);
 
     const [editorRef, setEditorRef] = useState(useRef(null));
@@ -29,31 +30,37 @@ export default function Idle({code, setCode, selectedFile, setIdleRef}){
     useEffect(() => {
 
         let initialEditorInputSepYPos = 0;
-        const minEditorHeight = "200px";
-        const minInputHeight = "50px";
+        const minEditorHeight = 200;
+        const minInputHeight = 50;
 
         const editorAndInputOnMouseMove = (event)=>{
                 const dy = event.clientY - initialEditorInputSepYPos;
                 initialEditorInputSepYPos = event.clientY
+                let finalEditorHeight = 0;
+                let finalInputHeight = 0;
                 let dyEditor = parseInt(editorRef.current.offsetHeight) + dy;
                 let dyInput = parseInt(inputRef.current.offsetHeight) - dy;
-                if(dyEditor >= parseInt(minEditorHeight)){
-                    if(dyInput >= parseInt(minInputHeight)) {
-                        editorRef.current.style.height = `${dyEditor}px`;
-                        inputRef.current.style.height = `${dyInput}px`;
+                if(dyEditor >= minEditorHeight){
+                    if(dyInput >= minInputHeight) {
+                        finalEditorHeight = dyEditor;
+                        finalInputHeight = dyInput;
                     }
                     else{
-                        dyEditor -= parseInt(minInputHeight) - dyInput;
-                        editorRef.current.style.height = `${dyEditor}px`;
-                        inputRef.current.style.height = minInputHeight;
+                        dyEditor -= minInputHeight - dyInput;
+                        finalEditorHeight = dyEditor;
+                        finalInputHeight = minInputHeight;
                     }
                 }
                 else{
-                    editorRef.current.style.height = minEditorHeight;
+                    finalEditorHeight = minEditorHeight;
                     dyInput -= parseInt(minEditorHeight) - dyEditor;
-                    inputRef.current.style.height = `${dyInput}px`;
+                    finalInputHeight = dyInput;
                 }
+                const finalEditorHeightPercent = (finalEditorHeight/(finalEditorHeight + finalInputHeight + 8)) * 100;
+                const finalInputHeightPercent = (finalInputHeight/(finalEditorHeight + finalInputHeight + 8)) * 100;
 
+                editorRef.current.style.height = finalEditorHeightPercent + "%";
+                inputRef.current.style.height = finalInputHeightPercent + "%";
 
         }
         const editorAndInputOnMouseUp = (event) => {
@@ -77,31 +84,39 @@ export default function Idle({code, setCode, selectedFile, setIdleRef}){
     useEffect(() => {
 
         let initialOutputErrorSepYPos = 0;
-        const minOutputHeight = "200px";
-        const minErrorHeight = "50px";
+        const minOutputHeight = 200;
+        const minErrorHeight = 50;
 
         const outputAndErrorOnMouseMove = (event)=>{
             const dy = event.clientY - initialOutputErrorSepYPos;
             initialOutputErrorSepYPos = event.clientY
+
+            let finalOutputHeight = 0
+            let finalErrorHeight = 0;
+
             let dyOutput = parseInt(outputRef.current.offsetHeight) + dy;
             let dyError = parseInt(errorRef.current.offsetHeight) - dy;
-            if(dyOutput >= parseInt(minOutputHeight)){
-                if(dyError >= parseInt(minErrorHeight)) {
-                    outputRef.current.style.height = `${dyOutput}px`;
-                    errorRef.current.style.height = `${dyError}px`;
+            if(dyOutput >= minOutputHeight){
+                if(dyError >= minErrorHeight) {
+                    finalOutputHeight = dyOutput;
+                    finalErrorHeight = dyError;
                 }
                 else{
-                    dyOutput -= parseInt(minErrorHeight) - dyError;
-                    outputRef.current.style.height = `${dyOutput}px`;
-                    errorRef.current.style.height = minErrorHeight;
+                    dyOutput -= minErrorHeight - dyError;
+                    finalOutputHeight = dyOutput;
+                    finalErrorHeight = minErrorHeight;
                 }
             }
             else{
-                outputRef.current.style.height = minOutputHeight;
-                dyError -= parseInt(minOutputHeight) - dyOutput;
-                errorRef.current.style.height = `${dyError}px`;
+                finalOutputHeight = minOutputHeight;
+                dyError -= minOutputHeight - dyOutput;
+                finalErrorHeight = dyError;
             }
+            const finalOutputHeightPercent = (finalOutputHeight/(finalOutputHeight + finalErrorHeight + 6))*100;
+            const finalErrorHeightPercent = (finalErrorHeight/(finalOutputHeight + finalErrorHeight + 6))*100;
 
+            outputRef.current.style.height = finalOutputHeightPercent + "%";
+            errorRef.current.style.height = finalErrorHeightPercent + "%";
 
         }
         const outputAndErrorOnMouseUp = (event) => {
@@ -124,30 +139,39 @@ export default function Idle({code, setCode, selectedFile, setIdleRef}){
     useEffect(() => {
 
         let initialEditorInputAndOutputErrorSepXPos = 0;
-        const minEditorWidth = "400px";
-        const minOutputWidth = "150px";
+        const minEditorWidth = 400;
+        const minOutputWidth = 150;
 
         const EditorInputAndOutputErrorOnMouseMove = (event)=>{
             const dx = event.clientX - initialEditorInputAndOutputErrorSepXPos;
             initialEditorInputAndOutputErrorSepXPos = event.clientX
+            let finalEditorWidth = 0;
+            let finalOutputWidth = 0;
+
             let dyEditorInput = parseInt(editorAndInputParentRef.current.offsetWidth) + dx;
             let dyOutputError = parseInt(outputAndErrorParentRef.current.offsetWidth) - dx;
-            if(dyEditorInput >= parseInt(minEditorWidth)){
-                if(dyOutputError >= parseInt(minOutputWidth)) {
-                    editorAndInputParentRef.current.style.width = `${dyEditorInput}px`;
-                    outputAndErrorParentRef.current.style.width = `${dyOutputError}px`;
+            if(dyEditorInput >= minEditorWidth){
+                if(dyOutputError >= minOutputWidth) {
+                    finalEditorWidth = dyEditorInput;
+                    finalOutputWidth = dyOutputError;
                 }
                 else{
-                    dyEditorInput -= parseInt(minOutputWidth) - dyOutputError;
-                    editorAndInputParentRef.current.style.width = `${dyEditorInput}px`;
-                    outputAndErrorParentRef.current.style.width = minOutputWidth;
+                    dyEditorInput -= minOutputWidth - dyOutputError;
+                    finalEditorWidth = dyEditorInput;
+                    finalOutputWidth = minOutputWidth;
                 }
             }
             else{
-                editorAndInputParentRef.current.style.width = minEditorWidth;
-                dyOutputError -= parseInt(minEditorWidth) - dyEditorInput;
-                outputAndErrorParentRef.current.style.width = `${dyOutputError}px`;
+                finalEditorWidth = minEditorWidth;
+                dyOutputError -= minEditorWidth - dyEditorInput;
+                finalOutputWidth = dyOutputError;
             }
+
+            const finalEditorWidthPercent = (finalEditorWidth / (finalEditorWidth + finalOutputWidth)) * 100;
+            const finalOutputWidthPercent = (finalOutputWidth / (finalEditorWidth + finalOutputWidth)) * 100;
+
+            editorAndInputParentRef.current.style.width = `${finalEditorWidthPercent}%`;
+            outputAndErrorParentRef.current.style.width = `${finalOutputWidthPercent}%`;
 
 
         }
@@ -180,9 +204,10 @@ export default function Idle({code, setCode, selectedFile, setIdleRef}){
             <div ref={editorAndInputParentRef} className={styles.editorAndInputParent}>
                 <Editor setError={setError} setOutput={setOutput} setEditorRef={setEditorRef} code={code} setCode={setCode}
                 selectedFile={selectedFile}
+                input={input}
                 />
                 <div ref={editorAndInputSeparatorRef} className={styles.editorAndInputSeparator}></div>
-                <Input setInputRef={setInputRef}/>
+                <Input setInputRef={setInputRef} input={input} setInput={setInput}/>
             </div>
 
             <div ref={editorInputAndOutputErrorSeparatorRef} className={styles.editorInputAndOutputErrorSeperator}></div>

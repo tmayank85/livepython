@@ -1,0 +1,8 @@
+.cm-scroller{
+    overflow-x: inherit !important;
+}
+
+.cm-content{
+    border: none;
+    outline: none;
+}

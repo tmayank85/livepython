@@ -1,10 +1,12 @@
 .siteHeader{
-    background-color: var(--soft-light-grey);
+    background-color: var(--body-background);
     height: 25px;
+
 }
 
 .siteLogo{
     margin: 0;
-    color: var(--dark-slate-grey);
-    padding-left: 10px;
+    padding: 2px;
+    height: 16px;
+    opacity: 1;
 }

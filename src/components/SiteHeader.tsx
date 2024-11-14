@@ -4,7 +4,7 @@ export default function SiteHeader() {
 
     return (
         <header className={styles.siteHeader}>
-            <span className={styles.siteLogo}>livepython.net</span>
+            <img className={styles.siteLogo} src="logoLivePythonCharcol.png"/>
         </header>
     )
 }

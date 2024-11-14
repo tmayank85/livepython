@@ -56,40 +56,87 @@ input: string
 import sys
 import asyncio
 import time
+import ast
 
 from io import StringIO
 
 # Redirect stdout to capture print
 sys.stdin = StringIO('''${inputGiven}'''.replace('''\n''', '''\\n'''));
 
-old_stdout = sys.stdout
+old_stdout_1234893147 = sys.stdout
 sys.stdout = StringIO()
-code = """${newCode}"""
+
+code_completed_8971234 = False
+error_msg_9474892348 = ""
+
+code_897845675 = """${newCode}"""
+timeout_microseconds_453653546734 = 0.01
+start_time_346564745 = time.time()
+timeout_exception_9387538956 = Exception("Time Limit Exceeded")
+
+def timeOutCounter_12454345634():
+    global error_msg_9474892348
+    if time.time() - start_time_346564745 > timeout_microseconds_453653546734:
+        error_msg_9474892348 = "Time Limit Exceeded"
+        raise timeout_exception_9387538956
+        
+def inject_function_call_765865534576(code):
+  new_code = ""
+  is_prev_parent = False
+  for i in code.split('\\n'):
+    i = i.rstrip()
+    if is_prev_parent and len(i) > 0:
+        is_prev_parent = False
+        new_code += (" "* ( len(i) - len(i.lstrip()) )) + "timeOutCounter_12454345634(); \\n"
+    if len(i) > 0 and i[-1] != ':':
+        if i[-1] != ';':
+            i += ';'
+        new_code += i + " timeOutCounter_12454345634(); \\n"
+    elif len(i) > 0 and i[-1] == ':':
+        is_prev_parent = True
+        new_code += i + '\\n'
+    else:
+      new_code += i + '\\n'
+  return new_code
 
 
-def run():
-    exec(code)
-run()
+try:
+    #print(inject_function_call_765865534576(code_897845675))
+    exec(inject_function_call_765865534576(code_897845675))
+    
+except Exception as e:
+    captured_output_7654674654 = sys.stdout.getvalue()
+    if e != timeout_exception_9387538956:
+        exec(code_897845675)
+    else:
+        raise e
 
 # Get the printed output
-captured_output = sys.stdout.getvalue()
+captured_output_7654674654 = sys.stdout.getvalue()
 
 # Restore stdout
-sys.stdout = old_stdout
+sys.stdout = old_stdout_1234893147
 
-captured_output
+captured_output_7654674654
 `)
                 // eslint-disable-next-line
                 // @ts-ignore
-                const result = pyodide.globals.get('captured_output');
+                const result = pyodide.globals.get('captured_output_7654674654');
                 setOutput(result);
                 setError("No Errors");
             }
             catch (error: unknown) {
-
-                // eslint-disable-next-line
-                // @ts-ignore
-                setError(error.message);
+                const result = pyodide.globals.get('captured_output_7654674654') || "";
+                const error_msg = pyodide.globals.get('error_msg_9474892348') || "";
+                if(result.length > 0){
+                    setOutput(result);
+                }
+                if(error_msg.length > 0)
+                    setError(error_msg)
+                else
+                    // eslint-disable-next-line
+                    // @ts-ignore
+                    setError(error.message);
             }
         }
 

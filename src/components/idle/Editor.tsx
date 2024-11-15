@@ -49,7 +49,6 @@ input: string
 
         if(pyodide){
             try{
-                const timeout = 100;
                 // eslint-disable-next-line
                 // @ts-ignore
                 await pyodide.runPythonAsync(`

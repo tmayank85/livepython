@@ -53,7 +53,7 @@ export default function Idle({code, setCode, selectedFile, setIdleRef, input, se
                 }
                 else{
                     finalEditorHeight = minEditorHeight;
-                    dyInput -= parseInt(minEditorHeight) - dyEditor;
+                    dyInput -= minEditorHeight - dyEditor;
                     finalInputHeight = dyInput;
                 }
                 const finalEditorHeightPercent = (finalEditorHeight/(finalEditorHeight + finalInputHeight + 8)) * 100;

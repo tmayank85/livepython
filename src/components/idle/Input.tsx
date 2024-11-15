@@ -4,6 +4,8 @@ import {Dispatch, MutableRefObject, SetStateAction, useEffect, useRef} from "rea
 export default function Input({setInputRef, input, setInput}:
 {
     setInputRef:  Dispatch<SetStateAction<MutableRefObject<any>>>
+    input: string,
+    setInput: Dispatch<SetStateAction<string>>
 }){
 
     const inputRef = useRef(null);

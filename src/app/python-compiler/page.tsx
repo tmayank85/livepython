@@ -14,7 +14,7 @@ export default function PythonCompiler(){
 
     const [fileSectionRef, setFileSectionRef] = useState(useRef(null));
     const [idleRef, setIdleRef] = useState(useRef(null));
-    const [fileSectionIdleSeparatorRef, setFileSectionIdleSeparatorRef] = useState(useRef(null));
+    const fileSectionIdleSeparatorRef = useRef(null);
 
     useEffect(() => {
 
